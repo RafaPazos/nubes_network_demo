@@ -42,7 +42,7 @@ data "local_file" "dnLogicApp" {
 }
 
 resource "azurerm_template_deployment" "la-test-workflow" {
-  resource_group_name = azurerm_resource_group.rg.name
+  resource_group_name = azurerm_resource_group.main.name
   deployment_mode     = "Incremental"
   name                = random_uuid.deploymentName.result
   parameters = {
