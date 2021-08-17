@@ -46,8 +46,7 @@ resource "azurerm_template_deployment" "la-test-workflow" {
   deployment_mode     = "Incremental"
   name                = random_uuid.deploymentName.result
   parameters = {
-    workflows_flow_name = azurerm_logic_app_workflow.la-test.name
-    location            = var.location
+    workflows_rpr_name = azurerm_logic_app_workflow.la-test.name
   }
   template_body = data.local_file.dnLogicApp.content
 }
