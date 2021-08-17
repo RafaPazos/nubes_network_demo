@@ -29,6 +29,8 @@ resource "azurerm_resource_group" "main" {
   }
 }
 
+resource "random_uuid" "deploymentName" {}
+
 resource "azurerm_logic_app_workflow" "la-test" {
   name                = "la-test"
   location            = var.location
