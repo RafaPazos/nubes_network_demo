@@ -31,9 +31,26 @@ resource "azurerm_resource_group" "main" {
 
 resource "azurerm_logic_app_workflow" "la-test" {
   name                = "la-test"
-  location            = azurerm_resource_group.main.location
+  location            = var.location
   resource_group_name = azurerm_resource_group.main.name
 }
+
+data "local_file" "dnLogicApp" {
+  filename = "${path.module}/../logic-apps/heartbeat/workflow.json"
+}
+
+resource "azurerm_template_deployment" "la-test-workflow" {
+  resource_group_name = azurerm_resource_group.rg.name
+  deployment_mode     = "Incremental"
+  name                = random_uuid.deploymentName.result
+  parameters = {
+    workflows_flow_name = azurerm_logic_app_workflow.la-test.name
+    location            = var.location
+  }
+  template_body = data.local_file.dnLogicApp.content
+}
+
+
 module "key-vault" {
   source           = "./modules/key-vault"
   resource_group   = azurerm_resource_group.main.name
