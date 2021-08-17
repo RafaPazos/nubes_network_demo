@@ -29,6 +29,11 @@ resource "azurerm_resource_group" "main" {
   }
 }
 
+resource "azurerm_logic_app_workflow" "la-test" {
+  name                = "la-test"
+  location            = azurerm_resource_group.main.location
+  resource_group_name = azurerm_resource_group.main.name
+}
 module "key-vault" {
   source           = "./modules/key-vault"
   resource_group   = azurerm_resource_group.main.name
