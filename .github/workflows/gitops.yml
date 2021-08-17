@@ -28,10 +28,10 @@ jobs:
         run: |
           TAG_NAME=${GITHUB_REF#refs/*/}
 
-          echo $AZURE_CREDENTIALS | jq -r .clientId 
-          echo $AZURE_CREDENTIALS | jq -r .subscriptionId 
-          echo $AZURE_CREDENTIALS | jq -r .tenantId
-          echo $AZURE_CREDENTIALS | jq -r .clientSecret
+          echo $AZURE_CREDENTIALS | jq -r '.clientId' 
+          echo $AZURE_CREDENTIALS | jq -r '.subscriptionId' 
+          echo $AZURE_CREDENTIALS | jq -r '.tenantId'
+          echo $AZURE_CREDENTIALS | jq -r '.clientSecret'
 
           echo "ENVIRONMENT=${TAG_NAME:4}" >> $GITHUB_ENV
           echo "ARM_CLIENT_ID=$(echo $AZURE_CREDENTIALS | jq -r .clientId)" >> $GITHUB_ENV
